@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-ENV TOKEN
 RUN echo off
 RUN "Wait for update complete..."
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install unzip wget curl -y
