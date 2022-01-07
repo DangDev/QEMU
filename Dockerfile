@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
-    echo off
-    echo "Wait for update complete..."
+    echo off && \
+    echo "Wait for update complete..." && \
     apt update DEBIAN_FRONTEND=noninteractive apt install unzip wget curl -y && \
     echo "Install Ngrok" && \
     echo "Downloading QEMU" && \
