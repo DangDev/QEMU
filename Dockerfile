@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 RUN echo off
-RUN "Wait for update complete..."
+RUN echo "Wait for update complete..."
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install unzip wget curl -y
 RUN echo "Install Ngrok"
 RUN wget --no-check-certificate -O ngrok-stable-linux-amd64.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip && unzip -o ngrok-stable-linux-amd64.zip
