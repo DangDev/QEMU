@@ -5,7 +5,7 @@ RUN apt update && DEBIAN_FRONTEND=noninteractive apt install unzip wget curl -y
 RUN echo "Install Ngrok"
 RUN echo "Downloading QEMU"
 RUN DEBIAN_FRONTEND=noninteractive apt install -y qemu-kvm
-RUN [ -s lite11.qcow2 ] || wget -O lite11.qcow2 https://app.vagrantup.com/thuonghai2711/boxes/WindowsQCOW2/versions/1.0.2/providers/qemu.box
+RUN [ -s lite11.qcow2 ] || wget -O lite11.qcow2 https://app.vagrantup.com/thuonghai2711/boxes/WindowsQCOW2/versions/1.0.2/providers/qemu.box >/dev/nul
 RUN disk=$(df -h /tmp | tail -1 | awk '{print $4}')
 RUN qemu-img resize lite11.qcow2 $disk
 RUN availableRAMcommand="free -m | tail -2 | head -1 | awk '{print \$7}'"
