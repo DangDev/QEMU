@@ -3,9 +3,6 @@ RUN echo off
 RUN echo "Wait for update complete..."
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install unzip wget curl -y
 RUN echo "Install Ngrok"
-RUN wget --no-check-certificate -O ngrok-stable-linux-amd64.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip && unzip -o ngrok-stable-linux-amd64.zip
-RUN ./ngrok authtoken $TOKEN 
-RUN nohup ./ngrok tcp --region ap 30889 &>/dev/null &
 RUN echo "Downloading QEMU"
 RUN DEBIAN_FRONTEND=noninteractive apt install -y qemu-kvm
 RUN [ -s lite11.qcow2 ] || wget -O lite11.qcow2 https://app.vagrantup.com/thuonghai2711/boxes/WindowsQCOW2/versions/1.0.2/providers/qemu.box
