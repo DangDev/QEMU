@@ -18,7 +18,7 @@ aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.
 aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE > /dev/null 2>&1
 aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch > /dev/null 2>&1
 
-aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type m5dn.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json > /dev/null 2>&1
+aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type c6gd.2xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json > /dev/null 2>&1
 INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId') > /dev/null 2>&1
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{State:State.Name,Address:PublicIpAddress}"
 aws ec2 create-volume --volume-type gp2 --size 1024 --availability-zone ap-southeast-1c --output text > volume.json > /dev/null 2>&1
