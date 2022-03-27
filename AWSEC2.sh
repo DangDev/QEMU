@@ -1,3 +1,4 @@
+#!/bin/bash
 apt install awscli -y
 echo $AWS_ACCESS_KEY_ID
 echo $AWS_SECRET_ACCESS_KEY
