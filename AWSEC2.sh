@@ -2,11 +2,9 @@
 echo off
 echo install Awscli
 apt install awscli -y
-echo 'AWS_ACCESS_KEY_ID: ' $AWS_ACCESS_KEY_ID
-echo 'AWS_SECRET_ACCESS_KEY: ' $AWS_SECRET_ACCESS_KEY
-echo ap-southeast-1
-echo ======================
-aws configure
+mkdir ~/.aws/
+echo "[default]" > ~/.aws/config
+echo "region = ap-southeast-1" >> ~/.aws/config
 aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
 VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text)
 SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text)
