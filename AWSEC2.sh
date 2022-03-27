@@ -1,7 +1,7 @@
 #!/bin/bash
 echo off
 echo install Awscli
-apt install awscli -y
+{apt install awscli -y} &> /dev/null
 echo 'AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID'
 echo 'AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY'
 echo ap-southeast-1
