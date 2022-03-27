@@ -6,6 +6,8 @@ echo 'AWS_SECRET_ACCESS_KEY: ' $AWS_SECRET_ACCESS_KEY
 echo ap-southeast-1
 echo ======================
 aws configure
+echo ======================
+echo Wait for IP
 aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem > /dev/null 2>&1
 VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text) > /dev/null 2>&1
 SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text) > /dev/null 2>&1
@@ -26,6 +28,6 @@ aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].I
 aws ec2 create-volume --volume-type gp2 --size 1024 --availability-zone ap-southeast-1c --output text > volume.json > /dev/null 2>&1
 VOLUME=$(cat volume.json | jq -r '.VolumeId') > /dev/null 2>&1
 aws ec2 attach-volume --device /dev/sdh --instance-id $INSTANCE_ID --volume-id $VOLUME > /dev/null 2>&1
-echo Wait 2 minute to boot up
+echo Wait for Pass
 sleep 120
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem 
