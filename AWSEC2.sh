@@ -25,9 +25,9 @@ aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type c6gd.2xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json > /dev/null 2>&1
 INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId') > /dev/null 2>&1
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{State:State.Name,Address:PublicIpAddress}"
-aws ec2 create-volume --volume-type gp2 --size 1024 --availability-zone ap-southeast-1c --output text > volume.json > /dev/null 2>&1
-VOLUME=$(cat volume.json | jq -r '.VolumeId') > /dev/null 2>&1
-aws ec2 attach-volume --device /dev/sdh --instance-id $INSTANCE_ID --volume-id $VOLUME > /dev/null 2>&1
+# aws ec2 create-volume --volume-type gp2 --size 1024 --availability-zone ap-southeast-1c --output text > volume.json > /dev/null 2>&1
+# VOLUME=$(cat volume.json | jq -r '.VolumeId') > /dev/null 2>&1
+# aws ec2 attach-volume --device /dev/sdh --instance-id $INSTANCE_ID --volume-id $VOLUME > /dev/null 2>&1
 echo Wait for Pass
 sleep 120
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem 
