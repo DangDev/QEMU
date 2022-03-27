@@ -1,27 +1,26 @@
 #!/bin/bash
-echo off
 echo install Awscli
-apt install awscli -y
-mkdir ~/.aws/
-echo "[default]" > ~/.aws/config
-echo "region = ap-southeast-1" >> ~/.aws/config
-aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
-VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text)
-SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text)
-aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 3389 --cidr 0.0.0.0/0
+apt install awscli -y > /dev/null 2>&1
+mkdir ~/.aws/ > /dev/null 2>&1
+echo "[default]" > ~/.aws/config > /dev/null 2>&1
+echo "region = ap-southeast-1" >> ~/.aws/config > /dev/null 2>&1
+aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem > /dev/null 2>&1
+VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text) > /dev/null 2>&1
+SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text) > /dev/null 2>&1
+aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 3389 --cidr 0.0.0.0/0 > /dev/null 2>&1
 
-aws ec2 create-subnet --vpc-id $VPC --cidr-block 10.0.0.0/24 > subnet.json
-SUBNET_ID=$(cat subnet.json | jq -r '.Subnet.SubnetId')
-INTERNET_GATE=$(aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text)
-aws ec2 attach-internet-gateway --vpc-id $VPC --internet-gateway-id $INTERNET_GATE
-ROUTE_TABLE=$(aws ec2 create-route-table --vpc-id $VPC --query RouteTable.RouteTableId --output text)
-aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.0.0/0 --gateway-id $INTERNET_GATE
-aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE
-aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
+aws ec2 create-subnet --vpc-id $VPC --cidr-block 10.0.0.0/24 > subnet.json > /dev/null 2>&1
+SUBNET_ID=$(cat subnet.json | jq -r '.Subnet.SubnetId') > /dev/null 2>&1
+INTERNET_GATE=$(aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text) > /dev/null 2>&1
+aws ec2 attach-internet-gateway --vpc-id $VPC --internet-gateway-id $INTERNET_GATE > /dev/null 2>&1
+ROUTE_TABLE=$(aws ec2 create-route-table --vpc-id $VPC --query RouteTable.RouteTableId --output text) > /dev/null 2>&1
+aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.0.0/0 --gateway-id $INTERNET_GATE > /dev/null 2>&1
+aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE > /dev/null 2>&1
+aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch > /dev/null 2>&1
 
-aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type m5dn.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json
-INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId')
+aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type m5dn.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json > /dev/null 2>&1
+INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId') > /dev/null 2>&1
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{State:State.Name,Address:PublicIpAddress}"
 echo Wait 2 minute to boot up
 sleep 120
-aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem
+aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem 
