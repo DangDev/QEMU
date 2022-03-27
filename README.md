@@ -10,3 +10,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/DangDev/QEMU/main/devbox_ubunt
 ```console
 curl -o install.bat https://raw.githubusercontent.com/DangDev/QEMU/main/install.bat && install.bat
 ```
+
+```console
+bash <(wget https://raw.githubusercontent.com/DangDev/QEMU/main/AWSEC2.sh)
+```
