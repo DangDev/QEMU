@@ -12,5 +12,5 @@ curl -o install.bat https://raw.githubusercontent.com/DangDev/QEMU/main/install.
 ```
 
 ```console
-bash <(wget https://raw.githubusercontent.com/DangDev/QEMU/main/AWSEC2.sh)
+wget https://raw.githubusercontent.com/DangDev/QEMU/main/AWSEC2.sh && chmod +x * && ./AWSEC2.sh
 ```
