@@ -19,7 +19,7 @@ aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.
 aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE
 aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 
-aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json
+aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type m5dn.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json
 INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId')
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{State:State.Name,Address:PublicIpAddress}"
 echo Wait 2 minute to boot up
