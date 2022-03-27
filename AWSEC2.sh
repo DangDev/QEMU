@@ -1,8 +1,10 @@
 #!/bin/bash
+echo off
 apt install awscli -y
-echo $AWS_ACCESS_KEY_ID
-echo $AWS_SECRET_ACCESS_KEY
+echo 'AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID'
+echo 'AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY'
 echo ap-southeast-1
+echo ======================
 aws configure
 aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
 VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text)
@@ -21,4 +23,6 @@ aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 aws ec2 run-instances --image-id ami-0986ce89f08af5d39 --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json
 INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId')
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{State:State.Name,Address:PublicIpAddress}"
+echo Wait 2 minute to boot up
+sleep 120
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem
