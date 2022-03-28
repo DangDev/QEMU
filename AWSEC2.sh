@@ -42,7 +42,7 @@ case $CHOICE in
         3)
             AMI="ami-0cebc9110ef246a50"
         4)
-            AMI="SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
+            AMI="ami-057f7e34dc12e5ca5"
         5)
             AMI="ami-055d15d9cfddf7bd3"
         6)
