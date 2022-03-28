@@ -73,6 +73,7 @@ case $CHOICE in
             ;;
         13)
             AMI=$(dialog --title "Custom AMI" --inputbox "Paste your AMI:" 8 40)
+            exitstatus=$?
             ;;
 esac
 
