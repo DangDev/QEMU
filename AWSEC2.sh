@@ -101,4 +101,5 @@ credentials="
 Public IP: $(cat instance.json |jq -r '.[0][0].Address')
 Username: administrator
 Pass: $(cat pass.json | jq -r '.PasswordData')"
+echo "$credentials" > credentials.txt
 dialog --title "Your credentials" --msgbox "$credentials" 21 56
