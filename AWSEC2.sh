@@ -14,16 +14,16 @@ BACKTITLE="HaiDang"
 TITLE="Image option"
 MENU="Choose image you want:"
 OPTIONS=(1 "Microsoft Windows Server 2022 Base"
-         2 "Amazon Linux 2 AMI (HVM) - Kernel 4.14, SSD Volume Type"
-         3 "Red Hat Enterprise Linux 8 (HVM), SSD Volume Type"
-         4 "SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
+         2 "Microsoft Windows Server 2019 Base"
+         3 "Microsoft Windows Server 2016 Base"
+         4 "Microsoft Windows Server 2012 R2 Base"
          5 "Ubuntu Server 20.04 LTS (HVM), SSD Volume Type"
          6 "Ubuntu Server 18.04 LTS (HVM), SSD Volume Type"
          7 "Debian 10 (HVM), SSD Volume Type"
-         8 "Microsoft Windows Server 2019 Base"
+         8 "Amazon Linux 2 AMI (HVM) - Kernel 4.14, SSD Volume Type"
          9 "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
-         10 "Microsoft Windows Server 2016 Base"
-         11 "Microsoft Windows Server 2012 R2 Base"
+         10 "Red Hat Enterprise Linux 8 (HVM), SSD Volume Type"
+         11 "SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
          12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type")
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
@@ -38,13 +38,13 @@ case $CHOICE in
             AMI="ami-0828f782ee03b55e4"
             ;;
         2)
-            AMI="ami-02c62c1cc162ef9a1"
+            AMI="ami-0986ce89f08af5d39"
             ;;
         3)
-            AMI="ami-0cebc9110ef246a50"
+            AMI="ami-036af2516aed74eba"
             ;;
         4)
-            AMI="ami-057f7e34dc12e5ca5"
+            AMI="ami-0cf4e8324c08f79ce"
             ;;
         5)
             AMI="ami-055d15d9cfddf7bd3"
@@ -56,16 +56,16 @@ case $CHOICE in
             AMI="ami-01aa83ab14b00e516"
             ;;
         8)
-            AMI="ami-0986ce89f08af5d39"
+            AMI="ami-02c62c1cc162ef9a1"
             ;;
         9)
             AMI="ami-0801a1e12f4a9ccc0"
             ;;
         10)
-            AMI="ami-036af2516aed74eba"
+            AMI="ami-0cebc9110ef246a50"
             ;;
         11)
-            AMI="ami-0cf4e8324c08f79ce"
+            AMI="ami-057f7e34dc12e5ca5"
             ;;
         12)
             AMI="ami-0f74c08b8b5effa56"
