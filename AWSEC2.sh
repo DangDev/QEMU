@@ -9,7 +9,7 @@ echo 'aws_secret_access_key='$AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
 clear
 HEIGHT=21
 WIDTH=56
-CHOICE_HEIGHT=12
+CHOICE_HEIGHT=13
 BACKTITLE="HaiDang"
 TITLE="Image option"
 MENU="Choose image you want:"
