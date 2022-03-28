@@ -88,8 +88,12 @@ aws ec2 run-instances --image-id $AMI --instance-type m5.xlarge --key-name haida
 INSTANCE_ID=$(cat instances.json | jq -r '.Instances[0].InstanceId')
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
 clear
-echo Wait 2 minute to boot up
-sleep 120
+{
+    for ((i = 0 ; i <= 100 ; i+=6)); do
+        sleep 5
+        echo $i
+    done
+} | dialog --gauge "Please wait while boot up your VM" 6 60
 clear
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem > pass.json
 credentials="
