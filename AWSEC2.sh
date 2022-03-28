@@ -88,6 +88,8 @@ PORT=$(whiptail --title "Port" --inputbox "Type custom port, leave to exit:" 10 
 if [[ ! -z "$PORT" ]]
 then
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port $PORT --cidr 0.0.0.0/0
+else
+break
 fi
 done
 aws ec2 create-subnet --vpc-id $VPC --cidr-block 10.0.0.0/24 > subnet.json
