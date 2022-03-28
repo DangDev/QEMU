@@ -13,7 +13,7 @@ CHOICE_HEIGHT=12
 BACKTITLE="HaiDang"
 TITLE="Image option"
 MENU="Choose image you want:"
-OPTIONS=(1 "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
+OPTIONS=(1 "Microsoft Windows Server 2022 Base"
          2 "Amazon Linux 2 AMI (HVM) - Kernel 4.14, SSD Volume Type"
          3 "Red Hat Enterprise Linux 8 (HVM), SSD Volume Type"
          4 "SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
@@ -21,7 +21,7 @@ OPTIONS=(1 "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
          6 "Ubuntu Server 18.04 LTS (HVM), SSD Volume Type"
          7 "Debian 10 (HVM), SSD Volume Type"
          8 "Microsoft Windows Server 2019 Base"
-         9 "Microsoft Windows Server 2022 Base"
+         9 "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
          10 "Microsoft Windows Server 2016 Base"
          11 "Microsoft Windows Server 2012 R2 Base"
          12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type")
@@ -35,7 +35,7 @@ CHOICE=$(dialog --clear \
 clear
 case $CHOICE in
         1)
-            AMI="ami-0801a1e12f4a9ccc0"
+            AMI="ami-0828f782ee03b55e4"
             ;;
         2)
             AMI="ami-02c62c1cc162ef9a1"
@@ -59,7 +59,7 @@ case $CHOICE in
             AMI="ami-0986ce89f08af5d39"
             ;;
         9)
-            AMI="ami-0828f782ee03b55e4"
+            AMI="ami-0801a1e12f4a9ccc0"
             ;;
         10)
             AMI="ami-036af2516aed74eba"
