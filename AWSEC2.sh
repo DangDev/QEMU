@@ -92,6 +92,7 @@ echo Wait 2 minute to boot up
 sleep 120
 clear
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem > pass.json
-echo 'Public IP: ' $(cat instance.json |jq -r '.[0][0].Address')
-echo 'Username: administrator'
-echo 'Pass: ' $(cat pass.json | jq -r '.PasswordData')
+credentials="
+Public IP: $(cat instance.json |jq -r '.[0][0].Address')
+Username: administrator
+Pass: $(cat pass.json | jq -r '.PasswordData')"
