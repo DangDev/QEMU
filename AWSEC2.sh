@@ -24,7 +24,8 @@ OPTIONS=(1 "Microsoft Windows Server 2022 Base"
          9 "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
          10 "Red Hat Enterprise Linux 8 (HVM), SSD Volume Type"
          11 "SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
-         12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type")
+         12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type"
+         13 "Your own AMI")
 CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
@@ -69,6 +70,9 @@ case $CHOICE in
             ;;
         12)
             AMI="ami-0f74c08b8b5effa56"
+            ;;
+        13)
+            AMI=$(dialog --title "Custom AMI" --inputbox "Paste your AMI:" 8 40)
             ;;
 esac
 
