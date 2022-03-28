@@ -25,7 +25,7 @@ OPTIONS=(1 "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
          10 "Microsoft Windows Server 2016 Base"
          11 "Microsoft Windows Server 2012 R2 Base"
          12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type")
-CHOICE=$(whiptail --clear \
+CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
                 --menu "$MENU" \
