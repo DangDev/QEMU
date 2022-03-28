@@ -1,10 +1,11 @@
 #!/bin/bash
 apt install awscli dialog -y
-echo 'AWS_ACCESS_KEY_ID: ' $AWS_ACCESS_KEY_ID
-echo 'AWS_SECRET_ACCESS_KEY: ' $AWS_SECRET_ACCESS_KEY
-echo ap-southeast-1
-echo ======================
-aws configure
+mkdir ~/.aws/
+echo "[default]" > ~/.aws/config
+echo "region = ap-southeast-1" >> ~/.aws/config
+echo "[default]"  > ~/.aws/credentials
+echo 'aws_access_key_id=' $AWS_ACCESS_KEY_ID >> ~/.aws/credentials
+echo 'aws_secret_access_key=' $AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
 clear
 HEIGHT=21
 WIDTH=56
