@@ -1,12 +1,66 @@
 #!/bin/bash
 echo off
 echo install Awscli
-apt install awscli -y
+apt install awscli dialog -y
 echo 'AWS_ACCESS_KEY_ID: ' $AWS_ACCESS_KEY_ID
 echo 'AWS_SECRET_ACCESS_KEY: ' $AWS_SECRET_ACCESS_KEY
 echo ap-southeast-1
 echo ======================
 aws configure
+clear
+HEIGHT=15
+WIDTH=40
+CHOICE_HEIGHT=4
+BACKTITLE="HaiDang"
+TITLE="Image option"
+MENU="Choose image you want:"
+OPTIONS=(1 "Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type"
+         2 "Amazon Linux 2 AMI (HVM) - Kernel 4.14, SSD Volume Type"
+         3 "Red Hat Enterprise Linux 8 (HVM), SSD Volume Type"
+         4 "SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
+         5 "Ubuntu Server 20.04 LTS (HVM), SSD Volume Type"
+         6 "Ubuntu Server 18.04 LTS (HVM), SSD Volume Type"
+         7 "Debian 10 (HVM), SSD Volume Type"
+         8 "Microsoft Windows Server 2019 Base"
+         9 "Microsoft Windows Server 2022 Base"
+         10 "Microsoft Windows Server 2016 Base"
+         11 "Microsoft Windows Server 2012 R2 Base"
+         12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type")
+CHOICE=$(dialog --clear \
+                --backtitle "$BACKTITLE" \
+                --title "$TITLE" \
+                --menu "$MENU" \
+                $HEIGHT $WIDTH $CHOICE_HEIGHT \
+                "${OPTIONS[@]}" \
+                2>&1 >/dev/tty)
+clear
+case $CHOICE in
+        1)
+            AMI="ami-0801a1e12f4a9ccc0"
+        2)
+            AMI="ami-02c62c1cc162ef9a1"
+        3)
+            AMI="ami-0cebc9110ef246a50"
+        4)
+            AMI="SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
+        5)
+            AMI="ami-055d15d9cfddf7bd3"
+        6)
+            AMI="ami-07315f74f3fa6a5a3"
+        7)
+            AMI="ami-01aa83ab14b00e516"
+        8)
+            AMI="ami-0986ce89f08af5d39"
+        9)
+            AMI="ami-0828f782ee03b55e4"
+        10)
+            AMI="ami-036af2516aed74eba"
+        11)
+            AMI="ami-0cf4e8324c08f79ce"
+        12)
+            AMI="ami-0f74c08b8b5effa56"
+esac
+         
 aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
 VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text)
 SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text)
@@ -21,7 +75,7 @@ aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.
 aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE
 aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 
-aws ec2 run-instances --image-id ami-0828f782ee03b55e4 --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json
+aws ec2 run-instances --image-id $AMI --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instance.json
 INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId')
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{State:State.Name,Address:PublicIpAddress}"
 echo Wait 2 minute to boot up
