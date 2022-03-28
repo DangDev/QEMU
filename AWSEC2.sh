@@ -37,28 +37,40 @@ clear
 case $CHOICE in
         1)
             AMI="ami-0801a1e12f4a9ccc0"
+            ;;
         2)
             AMI="ami-02c62c1cc162ef9a1"
+            ;;
         3)
             AMI="ami-0cebc9110ef246a50"
+            ;;
         4)
             AMI="ami-057f7e34dc12e5ca5"
+            ;;
         5)
             AMI="ami-055d15d9cfddf7bd3"
+            ;;
         6)
             AMI="ami-07315f74f3fa6a5a3"
+            ;;
         7)
             AMI="ami-01aa83ab14b00e516"
+            ;;
         8)
             AMI="ami-0986ce89f08af5d39"
+            ;;
         9)
             AMI="ami-0828f782ee03b55e4"
+            ;;
         10)
             AMI="ami-036af2516aed74eba"
+            ;;
         11)
             AMI="ami-0cf4e8324c08f79ce"
+            ;;
         12)
             AMI="ami-0f74c08b8b5effa56"
+            ;;
 esac
          
 aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
