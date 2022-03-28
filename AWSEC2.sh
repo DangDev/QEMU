@@ -100,5 +100,5 @@ aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYA
 credentials="
 Public IP: $(cat instance.json |jq -r '.[0][0].Address')
 Username: administrator
-Pass: $(cat pass.json | jq -r '.PasswordData')"
+Pass: $(cat pass.json | jq -r '.PasswordData')" > credentials.txt
 dialog --title "Your credentials" --msgbox "$credentials" 21 56
