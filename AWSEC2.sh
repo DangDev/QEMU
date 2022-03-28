@@ -86,12 +86,13 @@ ROUTE_TABLE=$(aws ec2 create-route-table --vpc-id $VPC --query RouteTable.RouteT
 aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.0.0/0 --gateway-id $INTERNET_GATE
 aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE
 aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
-clear
 aws ec2 run-instances --image-id $AMI --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instances.json
 INSTANCE_ID=$(cat instance.json | jq -r '.Instances[0].InstanceId')
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
+clear
 echo Wait 2 minute to boot up
 sleep 120
+clear
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem > pass.json
 echo 'Public IP: ' $(cat instance.json |jq -r '.[0][0].Address')
 echo 'Pass: ' $(cat pass.json | jq -r '.PasswordData')
