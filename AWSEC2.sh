@@ -84,8 +84,8 @@ aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp 
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 22 --cidr 0.0.0.0/0
 while :
 do
-PORT=$(whiptail --title "Port" --inputbox "Type custom port, (exit) to exit:" 10 60 3>&1 1>&2 2>&3)
-if [ PORT!='exit' ]
+PORT=$(whiptail --title "Port" --inputbox "Type custom port, leave to exit:" 10 60 3>&1 1>&2 2>&3)
+if [[ ! -z "$PORT" ]]
 then
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port $PORT --cidr 0.0.0.0/0
 fi
