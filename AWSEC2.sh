@@ -26,7 +26,7 @@ OPTIONS=(1 "Microsoft Windows Server 2022 Base"
          11 "SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
          12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type"
          13 "Your own AMI")
-CHOICE=$(dialog --clear \
+CHOICE=$(whiptail --clear \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
                 --menu "$MENU" \
@@ -72,7 +72,7 @@ case $CHOICE in
             AMI="ami-0f74c08b8b5effa56"
             ;;
         13)
-            AMI=$(dialog --title "Custom AMI" --inputbox "Type your own AMI:" 10 60 Wigglebutt 3>&1 1>&2 2>&3)
+            AMI=$(whiptail --title "Custom AMI" --inputbox "Type your own AMI:" 10 60 Wigglebutt 3>&1 1>&2 2>&3)
             exitstatus=$?
             ;;
 esac
@@ -99,7 +99,7 @@ clear
         sleep 5
         echo $i
     done
-} | dialog --gauge "Please wait while boot up your VM" 6 60
+} | whiptail --gauge "Please wait while boot up your VM" 6 60
 clear
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem > pass.json
 credentials="
@@ -107,4 +107,4 @@ Public IP: $(cat instance.json |jq -r '.[0][0].Address')
 Username: administrator
 Pass: $(cat pass.json | jq -r '.PasswordData')"
 echo "$credentials" > credentials.txt
-dialog --title "Your credentials" --msgbox "$credentials" 21 56
+whiptail --title "Your credentials" --msgbox "$credentials" 21 56
