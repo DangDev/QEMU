@@ -8,9 +8,9 @@ echo ap-southeast-1
 echo ======================
 aws configure
 clear
-HEIGHT=15
-WIDTH=40
-CHOICE_HEIGHT=4
+HEIGHT=21
+WIDTH=56
+CHOICE_HEIGHT=5
 BACKTITLE="HaiDang"
 TITLE="Image option"
 MENU="Choose image you want:"
