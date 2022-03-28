@@ -72,7 +72,7 @@ case $CHOICE in
             AMI="ami-0f74c08b8b5effa56"
             ;;
         13)
-            AMI=$(whiptail --title "Custom AMI" --inputbox "Type your own AMI:" 10 60 Wigglebutt 3>&1 1>&2 2>&3)
+            AMI=$(whiptail --title "Custom AMI" --inputbox "Type your own AMI:" 10 60 3>&1 1>&2 2>&3)
             exitstatus=$?
             ;;
 esac
