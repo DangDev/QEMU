@@ -10,7 +10,7 @@ aws configure
 clear
 HEIGHT=21
 WIDTH=56
-CHOICE_HEIGHT=5
+CHOICE_HEIGHT=12
 BACKTITLE="HaiDang"
 TITLE="Image option"
 MENU="Choose image you want:"
