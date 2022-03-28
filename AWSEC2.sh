@@ -72,39 +72,21 @@ case $CHOICE in
             ;;
 esac
 
-{
-    i = 0
-    aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
-    i += 6.5
-    VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text)
-    i += 6.5
-    SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text)
-    i += 6.5
-    aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 3389 --cidr 0.0.0.0/0
-    i += 6.5
-    aws ec2 create-subnet --vpc-id $VPC --cidr-block 10.0.0.0/24 > subnet.json
-    i += 6.5
-    SUBNET_ID=$(cat subnet.json | jq -r '.Subnet.SubnetId')
-    i += 6.5
-    INTERNET_GATE=$(aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text)
-    i += 6.5
-    aws ec2 attach-internet-gateway --vpc-id $VPC --internet-gateway-id $INTERNET_GATE
-    i += 6.5
-    ROUTE_TABLE=$(aws ec2 create-route-table --vpc-id $VPC --query RouteTable.RouteTableId --output text)
-    i += 6.5
-    aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.0.0/0 --gateway-id $INTERNET_GATE
-    i += 6.5
-    aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE
-    i += 6.5
-    aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
-    i += 6.5
-    aws ec2 run-instances --image-id $AMI --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instances.json
-    i += 6.5
-    INSTANCE_ID=$(cat instances.json | jq -r '.Instances[0].InstanceId')
-    i += 6.5
-    aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
-    i += 6.5
-} | dialog --gauge "Please wait while installing" 6 60 0
+aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
+VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text)
+SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text)
+aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 3389 --cidr 0.0.0.0/0
+aws ec2 create-subnet --vpc-id $VPC --cidr-block 10.0.0.0/24 > subnet.json
+SUBNET_ID=$(cat subnet.json | jq -r '.Subnet.SubnetId')
+INTERNET_GATE=$(aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text)
+aws ec2 attach-internet-gateway --vpc-id $VPC --internet-gateway-id $INTERNET_GATE
+ROUTE_TABLE=$(aws ec2 create-route-table --vpc-id $VPC --query RouteTable.RouteTableId --output text)
+aws ec2 create-route --route-table-id $ROUTE_TABLE --destination-cidr-block 0.0.0.0/0 --gateway-id $INTERNET_GATE
+aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TABLE
+aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
+aws ec2 run-instances --image-id $AMI --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instances.json
+INSTANCE_ID=$(cat instances.json | jq -r '.Instances[0].InstanceId')
+aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
 clear
 echo Wait 2 minute to boot up
 sleep 120
