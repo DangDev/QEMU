@@ -26,7 +26,7 @@ OPTIONS=(1 "Microsoft Windows Server 2022 Base"
          11 "SUSE Linux Enterprise Server 15 SP3 (HVM), SSD Volume Type"
          12 "Ubuntu Server 16.04 LTS (HVM), SSD Volume Type"
          13 "Your own AMI")
-CHOICE=$(whiptail --clear \
+CHOICE=$(dialog --clear \
                 --backtitle "$BACKTITLE" \
                 --title "$TITLE" \
                 --menu "$MENU" \
@@ -99,7 +99,7 @@ clear
         sleep 5
         echo $i
     done
-} | whiptail --gauge "Please wait while boot up your VM" 6 60
+} | dialog --gauge "Please wait while boot up your VM" 6 60
 clear
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem > pass.json
 credentials="
@@ -107,4 +107,4 @@ Public IP: $(cat instance.json |jq -r '.[0][0].Address')
 Username: administrator
 Pass: $(cat pass.json | jq -r '.PasswordData')"
 echo "$credentials" > credentials.txt
-whiptail --title "Your credentials" --msgbox "$credentials" 21 56
+dialog --title "Your credentials" --msgbox "$credentials" 21 56
