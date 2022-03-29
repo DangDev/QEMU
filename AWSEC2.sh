@@ -95,9 +95,6 @@ aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TA
 aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 aws ec2 run-instances --image-id $AMI --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instances.json
 INSTANCE_ID=$(cat instances.json | jq -r '.Instances[0].InstanceId')
-AVAIABILITY_ZONE=$(cat instances.json | jq -r '.Instances[0].Placement.AvailabilityZone')
-VOLUME=$(aws ec2 create-volume --volume-type gp2 --size $VOLUME_SIZE --availability-zone $AVAIABILITY_ZONE | jq -r '.VolumeId')
-aws ec2 attach-volume --volume-id $VOLUME --instance-id $INSTANCE_ID --device /dev/sdf
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
 clear
 {
@@ -106,6 +103,9 @@ clear
         echo $i
     done
 } | dialog --gauge "Please wait while boot up your VM" 6 60
+AVAIABILITY_ZONE=$(cat instances.json | jq -r '.Instances[0].Placement.AvailabilityZone')
+VOLUME=$(aws ec2 create-volume --volume-type gp2 --size $VOLUME_SIZE --availability-zone $AVAIABILITY_ZONE | jq -r '.VolumeId')
+aws ec2 attach-volume --volume-id $VOLUME --instance-id $INSTANCE_ID --device /dev/sdf
 clear
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem > pass.json
 credentials="
