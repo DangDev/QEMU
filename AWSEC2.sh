@@ -82,7 +82,7 @@ VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output tex
 SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text)
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 3389 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 22 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 19132 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol udp --port 19132 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-id $SECURITY_ID --protocol tcp --port 25565 --cidr 0.0.0.0/0
 aws ec2 create-subnet --vpc-id $VPC --cidr-block 10.0.0.0/24 > subnet.json
 SUBNET_ID=$(cat subnet.json | jq -r '.Subnet.SubnetId')
