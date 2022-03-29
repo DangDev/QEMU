@@ -77,6 +77,7 @@ case $CHOICE in
             ;;
 esac
 
+VOLUME_SIZE=$(whiptail --title "Custom VOLUME SIZE" --inputbox "Type (GB):" 10 60 3>&1 1>&2 2>&3)
 aws ec2 create-key-pair --key-name haidangYAM --query 'KeyMaterial' --output text > haidangYAM.pem
 VPC=$(aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text)
 SECURITY_ID=$(aws ec2 create-security-group --group-name HaiDangNe --description "Hehe" --vpc-id ${VPC} --output text)
@@ -94,6 +95,8 @@ aws ec2 associate-route-table  --subnet-id $SUBNET_ID --route-table-id $ROUTE_TA
 aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 aws ec2 run-instances --image-id $AMI --instance-type m5.xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instances.json
 INSTANCE_ID=$(cat instances.json | jq -r '.Instances[0].InstanceId')
+VOLUME=$(aws ec2 create-volume --volume-type gp2 --size $VOLUME_SIZE --availability-zone ap-southeast-1c --output text)
+aws ec2 attach-volume --volume-id $VOLUME --instance-id $INSTANCE_ID --device /dev/sdf
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
 clear
 {
