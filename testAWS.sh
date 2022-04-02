@@ -94,12 +94,6 @@ aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 aws ec2 run-instances --image-id $AMI --instance-type p3.8xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instances.json
 INSTANCE_ID=$(cat instances.json | jq -r '.Instances[0].InstanceId')
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
-{
-    for ((i = 0 ; i <= 100 ; i+=6)); do
-        sleep 5
-        echo $i
-    done
-} | dialog --gauge "Please wait while boot up your VM" 6 60
 AVAIABILITY_ZONE=$(cat instances.json | jq -r '.Instances[0].Placement.AvailabilityZone')
 VOLUME=$(aws ec2 create-volume --volume-type gp2 --size $VOLUME_SIZE --availability-zone $AVAIABILITY_ZONE | jq -r '.VolumeId')
 aws ec2 attach-volume --volume-id $VOLUME --instance-id $INSTANCE_ID --device /dev/sdf
