@@ -6,7 +6,6 @@ echo "region = ap-southeast-1" >> ~/.aws/config
 echo "[default]"  > ~/.aws/credentials
 echo 'aws_access_key_id='$AWS_ACCESS_KEY_ID >> ~/.aws/credentials
 echo 'aws_secret_access_key='$AWS_SECRET_ACCESS_KEY >> ~/.aws/credentials
-clear
 HEIGHT=21
 WIDTH=56
 CHOICE_HEIGHT=13
@@ -33,7 +32,6 @@ CHOICE=$(dialog --clear \
                 $HEIGHT $WIDTH $CHOICE_HEIGHT \
                 "${OPTIONS[@]}" \
                 2>&1 >/dev/tty)
-clear
 case $CHOICE in
         1)
             AMI="ami-0828f782ee03b55e4"
@@ -96,7 +94,6 @@ aws ec2 modify-subnet-attribute --subnet-id $SUBNET_ID --map-public-ip-on-launch
 aws ec2 run-instances --image-id $AMI --instance-type p3.8xlarge --key-name haidangYAM --security-group-ids $SECURITY_ID --subnet-id $SUBNET_ID > instances.json
 INSTANCE_ID=$(cat instances.json | jq -r '.Instances[0].InstanceId')
 aws ec2 describe-instances --instance-id $INSTANCE_ID --query "Reservations[*].Instances[*].{Address:PublicIpAddress}" > instance.json
-clear
 {
     for ((i = 0 ; i <= 100 ; i+=6)); do
         sleep 5
@@ -106,7 +103,6 @@ clear
 AVAIABILITY_ZONE=$(cat instances.json | jq -r '.Instances[0].Placement.AvailabilityZone')
 VOLUME=$(aws ec2 create-volume --volume-type gp2 --size $VOLUME_SIZE --availability-zone $AVAIABILITY_ZONE | jq -r '.VolumeId')
 aws ec2 attach-volume --volume-id $VOLUME --instance-id $INSTANCE_ID --device /dev/sdf
-clear
 aws ec2 get-password-data --instance-id $INSTANCE_ID --priv-launch-key haidangYAM.pem > pass.json
 credentials="
 Public IP: $(cat instance.json |jq -r '.[0][0].Address')
