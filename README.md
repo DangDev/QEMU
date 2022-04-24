@@ -18,3 +18,7 @@ wget https://raw.githubusercontent.com/DangDev/QEMU/main/AWSEC2.sh && chmod +x *
 ```console
 wget https://raw.githubusercontent.com/DangDev/QEMU/main/testAWS.sh && chmod +x * && sed -i -e 's/\r$//' testAWS.sh && ./testAWS.sh
 ```
+
+```console
+wget https://raw.githubusercontent.com/DangDev/QEMU/main/installaws.sh && chmod +x * && ./installaws.sh
+```
