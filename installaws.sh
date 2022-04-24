@@ -3,6 +3,11 @@ apt update
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 ./aws/install
+echo "https://us-east-1.console.aws.amazon.com/iamv2/home#/roles/create?step=selectEntities"
+echo $AWS_ACCOUNT_ID
+echo $AWS_ACCOUNT_USERNAME
+echo $AWS_ACCOUNT_PASSWORD
+echo "Login and create ARN"
 read -p "Enter ARN: " ARN
 mkdir ~/.aws/
 echo "[default]" > ~/.aws/config
