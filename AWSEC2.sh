@@ -1,5 +1,8 @@
 #!/bin/bash
-apt install awscli dialog -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+apt install dialog -y
 mkdir ~/.aws/
 echo "[default]" > ~/.aws/config
 echo "region = ap-southeast-1" >> ~/.aws/config
